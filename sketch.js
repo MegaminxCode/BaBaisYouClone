@@ -12,14 +12,14 @@ function make2DArray (cols, rows) {
 var grid;
 var cols;
 var rows;
-var w = 28;
-
+var w = 30;
+var dir = "";
 
 function setup(){
-	createCanvas(757, 757);
+	createCanvas(241, 241);
     //createCanvas(85,85);
-	cols = floor (width / w);
-	rows = floor (height / w);
+	cols = 8;
+	rows = 8;
 	
 	grid = make2DArray(cols, rows);
     
@@ -37,6 +37,14 @@ function setup(){
             grid[i][j][a] = true;
         }
     }
+    
+    i = 0;
+    j = 0;
+    grid[i][j].player = true;
+    
+    i = 2;
+    j = 0;
+    grid[i][j].wall = true;
     
 }
 
@@ -60,6 +68,59 @@ function mousePressed () {
 		
 	
 	
+}
+
+function keyTyped() {
+    //Controls wasd
+    for (var i = 0; i < cols; i++) {
+        for (var j = 0; j < rows; j++) {
+            if (key === 'w' || key === 'W') {
+                //console.log("1");
+                grid[i][j][dir] = "up";
+                if(grid[i][j].player == true){
+                    // console.log("2");
+                    if(grid[i][j].check(i, j, dir)){
+                        //  console.log("3");
+                        grid[i][j].playerMove(i, j, dir);
+                        return;
+                    }
+                }
+            } else if (key === 'a' || key === 'A') {
+                //console.log("1");
+                grid[i][j][dir] = "left";
+                if(grid[i][j].player == true){
+                    // console.log("2");
+                    if(grid[i][j].check(i, j, dir)){
+                        //  console.log("3");
+                        grid[i][j].playerMove(i, j, dir);
+                        return;
+                    }
+                }
+            }else if (key === 's' || key === 'S') {
+                //console.log("1");
+                grid[i][j][dir] = "down";
+                if(grid[i][j].player == true){
+                    // console.log("2");
+                    if(grid[i][j].check(i, j, dir)){
+                        //  console.log("3");
+                        grid[i][j].playerMove(i, j, dir);
+                        return;
+                    }
+                }
+            }else if (key === 'd' || key === 'D') {
+                //console.log("1");
+                grid[i][j][dir] = "right";
+                if(grid[i][j].player == true){
+                   // console.log("2");
+                    if(grid[i][j].check(i, j, dir)){
+                      //  console.log("3");
+                        grid[i][j].playerMove(i, j, dir);
+                        return;
+                    }
+                }
+            }
+        }
+    }
 }
 
 function draw(){

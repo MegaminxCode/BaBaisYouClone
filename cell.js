@@ -4,7 +4,14 @@ function Cell(i, j, w) {
 	this.x = i * w;
 	this.y = j * w;
 	this.w = w;
-	
+    
+    this.dir = dir;
+    this.player = false;
+    this.isBlock = false;
+    this.push = false;
+    this.rock = false;
+    this.flag = false;
+    this.wall = false;
     this.color1 = false;
     this.color2 = false;
     this.color3 = false;
@@ -89,7 +96,14 @@ Cell.prototype.show = function() {
             
             fill(108, 92, 50);
         }
-        
+        if(this.player){
+            
+            fill(0);
+        }
+        if(this.wall){
+            
+            fill(255);
+        }
 		rect(this.x, this.y, this.w, this.w);
         
 	}
@@ -105,6 +119,124 @@ Cell.prototype.contains = function (x, y) {
 	
 	return(x > this.x && x < this.x + this.w && y > this.y && y < this.y + this.w); 
 		
+}
+
+Cell.prototype.playerMove = function (i,j, dir) {
+    if(grid[i][j][dir] == "up"){
+        console.log("playerMove Up is fine");
+        grid[i][j].player = false;
+        yoff = -1;
+        j = j + yoff;
+        
+        grid[i][j].player = true;
+        return;
+    }
+    if(grid[i][j][dir] == "left"){
+        console.log("playerMove Left is fine");
+        grid[i][j].player = false;
+        xoff = -1;
+        i = i + xoff;
+        
+        grid[i][j].player = true;
+        return;
+    }
+    if(grid[i][j][dir] == "down"){
+        console.log("playerMove Down is fine");
+        grid[i][j].player = false;
+        yoff = 1;
+        j = j + yoff;
+        
+        grid[i][j].player = true;
+        return;
+    }
+    if(grid[i][j][dir] == "right"){
+        console.log("playerMove Right is fine");
+        grid[i][j].player = false;
+        xoff = 1;
+        i = i + xoff;
+        
+        grid[i][j].player = true;
+        return;
+    }
+    
+    
+}
+
+Cell.prototype.check = function (i, j, dir) {
+    console.log("check has been ran");
+    if(grid[i][j][dir] == "up"){
+        console.log("check  up");
+        yoff = -1;
+        j = j + yoff;
+        if(j < 0){
+            return;
+        }else{
+        if(grid[i][j].wall == true){
+            console.log("check true is fine");
+            return false;
+            
+        } else{
+            console.log("check false is fine");
+            return true;
+            
+        }
+        }
+    }
+    if(grid[i][j][dir] == "left"){
+        console.log("check  left");
+        xoff = -1;
+        i = i + xoff;
+        if(i < 0){
+            return;
+        }else{
+        if(grid[i][j].wall == true){
+            console.log("check true is fine");
+            return false;
+            
+        } else{
+            console.log("check false is fine");
+            return true;
+            
+        }
+        }
+    }
+    if(grid[i][j][dir] == "down"){
+        console.log("check  down");
+        yoff = 1;
+        j = j + yoff;
+        if(j >= cols){
+            return;
+        }else{
+        if(grid[i][j].wall == true){
+            console.log("check true is fine");
+            return false;
+            
+        } else{
+            console.log("check false is fine");
+            return true;
+            
+        }
+        }
+    }
+    if(grid[i][j][dir] == "right"){
+        console.log("check  right");
+        xoff = 1;
+        i = i + xoff;
+        if(i >= rows){
+            return;
+        }else{
+            if(grid[i][j].wall == true){
+                console.log("check true is fine");
+                return false;
+            
+            } else{
+                console.log("check false is fine");
+                return true;
+            
+            }
+        }
+    }
+    
 }
 
 Cell.prototype.reveal = function (x, y) {
