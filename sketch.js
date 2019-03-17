@@ -46,6 +46,10 @@ function setup(){
     j = 0;
     grid[i][j].wall = true;
     
+    i = 3;
+    j = 3;
+    grid[i][j].rock = true;
+    
 }
 
 

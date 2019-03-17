@@ -8,7 +8,7 @@ function Cell(i, j, w) {
     this.dir = dir;
     this.player = false;
     this.isBlock = false;
-    this.push = false;
+    this.pushable = false;
     this.rock = false;
     this.flag = false;
     this.wall = false;
@@ -104,6 +104,9 @@ Cell.prototype.show = function() {
             
             fill(255);
         }
+        if(this.rock){
+            fill(125);
+        }
 		rect(this.x, this.y, this.w, this.w);
         
 	}
@@ -129,6 +132,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         j = j + yoff;
         
         grid[i][j].player = true;
+        //Moving twice fix
         return;
     }
     if(grid[i][j][dir] == "left"){
@@ -138,6 +142,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         i = i + xoff;
         
         grid[i][j].player = true;
+        //Moving twice fix
         return;
     }
     if(grid[i][j][dir] == "down"){
@@ -147,6 +152,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         j = j + yoff;
         
         grid[i][j].player = true;
+        //Moving twice fix
         return;
     }
     if(grid[i][j][dir] == "right"){
@@ -156,14 +162,18 @@ Cell.prototype.playerMove = function (i,j, dir) {
         i = i + xoff;
         
         grid[i][j].player = true;
+        //Moving twice fix
         return;
     }
     
     
 }
 
-Cell.prototype.check = function (i, j, dir) {
+Cell.prototype.check = function (i, j, dir, player, rock) {
     console.log("check has been ran");
+    //console.log(grid[i][j].rock);
+    //console.log(grid[i][j][dir]);
+    
     if(grid[i][j][dir] == "up"){
         console.log("check  up");
         yoff = -1;
@@ -172,11 +182,21 @@ Cell.prototype.check = function (i, j, dir) {
             return;
         }else{
         if(grid[i][j].wall == true){
-            console.log("check true is fine");
+            console.log("there's a wall");
             return false;
             
+        }else if(grid[i][j].rock == true){
+            //Pushing twice fix
+            grid[i][j][dir] = "up";
+            if(grid[i][j].check(i, j, dir,player, rock)){
+                console.log("push true");
+                this.push(i, j, dir);
+                return true;
+            }else{
+                return false;
+            }
         } else{
-            console.log("check false is fine");
+            //console.log("check false is fine");
             return true;
             
         }
@@ -190,11 +210,21 @@ Cell.prototype.check = function (i, j, dir) {
             return;
         }else{
         if(grid[i][j].wall == true){
-            console.log("check true is fine");
+            console.log("there's a wall");
             return false;
             
+        }else if(grid[i][j].rock == true){
+            //Pushing twice fix
+            grid[i][j][dir] = "left";
+            if(grid[i][j].check(i, j, dir,player, rock)){
+                console.log("push true");
+                this.push(i, j, dir);
+                return true;
+            }else{
+                return false;
+            }
         } else{
-            console.log("check false is fine");
+            //console.log("check false is fine");
             return true;
             
         }
@@ -208,11 +238,21 @@ Cell.prototype.check = function (i, j, dir) {
             return;
         }else{
         if(grid[i][j].wall == true){
-            console.log("check true is fine");
+            console.log("there's a wall");
             return false;
             
+        }else if(grid[i][j].rock == true){
+            //Pushing twice fix
+            grid[i][j][dir] = "down";
+            if(grid[i][j].check(i, j, dir,player, rock)){
+                console.log("push true");
+                this.push(i, j, dir);
+                return true;
+            }else{
+                return false;
+            }
         } else{
-            console.log("check false is fine");
+            //console.log("check false is fine");
             return true;
             
         }
@@ -223,20 +263,70 @@ Cell.prototype.check = function (i, j, dir) {
         xoff = 1;
         i = i + xoff;
         if(i >= rows){
-            return;
+            return false;
         }else{
             if(grid[i][j].wall == true){
-                console.log("check true is fine");
+                console.log("there's a wall");
                 return false;
             
-            } else{
-                console.log("check false is fine");
+            } else if(grid[i][j].rock == true){
+                //Pushing twice fix
+                grid[i][j][dir] = "right";
+                if(grid[i][j].check(i, j, dir,player, rock)){
+                    console.log("push true");
+                    this.push(i, j, dir);
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                //console.log("check true is fine");
                 return true;
             
             }
+            
         }
     }
     
+}
+
+Cell.prototype.push = function (i, j, dir) {
+    if(grid[i][j][dir] == "up"){
+        console.log("Push Up is fine");
+        grid[i][j].rock = false;
+        yoff = -1;
+        j = j + yoff;
+        
+        grid[i][j].rock = true;
+        return;
+    }
+    if(grid[i][j][dir] == "left"){
+        console.log("Push Left is fine");
+        grid[i][j].rock = false;
+        xoff = -1;
+        i = i + xoff;
+        
+        grid[i][j].rock = true;
+        return;
+    }
+    if(grid[i][j][dir] == "down"){
+        console.log("Push Down is fine");
+        grid[i][j].rock = false;
+        yoff = 1;
+        j = j + yoff;
+        
+        grid[i][j].rock = true;
+        return;
+    }
+    if(grid[i][j][dir] == "right"){
+        console.log("Push Right is fine");
+        grid[i][j].rock = false;
+        xoff = 1;
+        i = i + xoff;
+        
+        grid[i][j].rock = true;
+        return;
+    }
 }
 
 Cell.prototype.reveal = function (x, y) {
