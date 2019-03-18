@@ -14,7 +14,7 @@ var cols;
 var rows;
 var w = 30;
 var dir = "";
-
+var obj = "";
 function setup(){
 	createCanvas(241, 241);
     //createCanvas(85,85);
@@ -31,24 +31,48 @@ function setup(){
 		}
 	}
 	
-    for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
-            a = "color" + floor(random(1, 15));
+    for ( i = 0; i < cols; i++) {
+        for ( j = 0; j < rows; j++) {
+            a = "color" + 15;
             grid[i][j][a] = true;
+            grid[i][j].obj = "";
         }
     }
     
     i = 0;
     j = 0;
     grid[i][j].player = true;
-    
+    grid[i][j].obj = "Player";
+    //console.log(grid[i][j].obj);
     i = 2;
     j = 0;
-    grid[i][j].wall = true;
+    obj = grid[i][j].wall = true;
+    
+    i = 3;
+    j = 5;
+    grid[i][j].rock = true;
+    obj = grid[i][j].obj = "rock";
+    
+    i = 2;
+    j = 3;
+    grid[i][j].isBlock = true;
+    obj = grid[i][j].obj = "isBlock";
+    
+    i = 1;
+    j = 3;
+    grid[i][j].pushBlock = true;
+    obj = grid[i][j].obj = "pushBlock";
+    grid[i][j].pushable = true;
+    //console.log(grid[i][j].obj);
     
     i = 3;
     j = 3;
-    grid[i][j].rock = true;
+    grid[i][j].rockBlock = true;
+    obj = grid[i][j].obj = "rockBlock";
+    
+    i = 1;
+    j = 0;
+    grid[i][j].checkIsCommand();
     
 }
 
@@ -105,6 +129,7 @@ function keyTyped() {
                 grid[i][j][dir] = "down";
                 if(grid[i][j].player == true){
                     // console.log("2");
+                    console.log(grid[i][j].obj);
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
