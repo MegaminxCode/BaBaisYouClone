@@ -50,8 +50,8 @@ function setup(){
     
     i = 2;
     j = 6;
-    grid[i][j].flag = true;
-    obj = grid[i][j].obj = "flag";
+    grid[i][j].rock = true;
+    obj = grid[i][j].obj = "rock";
     
     i = 3;
     j = 4;
@@ -68,8 +68,8 @@ function setup(){
     
     i = 3;
     j = 3;
-    grid[i][j].flag = true;
-    obj = grid[i][j].obj = "flag";
+    grid[i][j].rock = true;
+    obj = grid[i][j].obj = "rock";
     
     i = 1;
     j = 0;
@@ -135,7 +135,7 @@ function keyTyped() {
                 grid[i][j][dir] = "down";
                 if(grid[i][j].player == true){
                     // console.log("2");
-                    console.log(grid[i][j].obj);
+                    //console.log(grid[i][j].obj);
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);

@@ -353,11 +353,20 @@ Cell.prototype.checkIsCommand = function () {
                 var yoff1 = 1;
                 var yoff2 = -1;
                  console.log("iscommand being ran2");
-                console.log(grid[i + xoff1][j].obj);
-                console.log(grid[i + xoff2][j].obj);
+                if(i + xoff1 >= cols || i + xoff2 < 0 || j + yoff1 >= rows || j + yoff2 < 0){
+                    console.log("out of bounds1");
+                    return false;
+                }else{
+                    console.log(grid[i + xoff1][j].obj);
+                    console.log(grid[i + xoff2][j].obj);
+                }
+                
                 console.log(grid[i][j].pushWasRanX);
                  console.log(grid[i][j].obj);
-                if(grid[i][j].pushWasRanX  == true){
+                if(i + xoff1 >= cols || i + xoff2 < 0 || j + yoff1 >= rows || j + yoff2 < 0){
+                    console.log("out of bounds2");
+                    return false;
+                }else if(grid[i][j].pushWasRanX  == true){
                     if (grid[i + xoff1][j].obj == "" && grid[i + xoff2][j].obj == ""){
                         
                         grid[i][j].pushWasRanX  = false;
