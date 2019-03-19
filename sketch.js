@@ -47,6 +47,7 @@ function setup(){
     i = 2;
     j = 0;
     obj = grid[i][j].wall = true;
+    grid[i][j].stop = true;
     
     i = 2;
     j = 6;
@@ -54,16 +55,28 @@ function setup(){
     obj = grid[i][j].obj = "rock";
     
     i = 3;
+    j = 5;
+    grid[i][j].stopBlock = true;
+    obj = grid[i][j].obj = "stopBlock";
+    grid[i][j].command = "this.setStop";
+    grid[i][j].undoCommand = "this.unSetStop";
+    grid[i][j].pushable = true;
+    grid[i][j].hasACommand = true;
+    
+    i = 3;
     j = 4;
     grid[i][j].isBlock = true;
     obj = grid[i][j].obj = "isBlock";
     grid[i][j].pushable = true;
     
-    i = 3;
-    j = 5;
+    i = 4;
+    j = 6;
     grid[i][j].pushBlock = true;
     obj = grid[i][j].obj = "pushBlock";
+    grid[i][j].command = "this.setPushable";
+    grid[i][j].undoCommand = "this.unSetPushable";
     grid[i][j].pushable = true;
+    grid[i][j].hasACommand = true;
     //console.log(grid[i][j].obj);
     
     i = 3;
