@@ -42,7 +42,7 @@ function setup(){
     i = 0;
     j = 0;
     grid[i][j].player = true;
-    grid[i][j].obj = "Player";
+    grid[i][j].obj = "player";
     //console.log(grid[i][j].obj);
     i = 2;
     j = 0;
@@ -50,13 +50,14 @@ function setup(){
     
     i = 3;
     j = 5;
-    grid[i][j].rock = true;
-    obj = grid[i][j].obj = "rock";
+    grid[i][j].flag = true;
+    obj = grid[i][j].obj = "flag";
     
     i = 2;
     j = 3;
     grid[i][j].isBlock = true;
     obj = grid[i][j].obj = "isBlock";
+    grid[i][j].pushable = true;
     
     i = 1;
     j = 3;
@@ -67,8 +68,8 @@ function setup(){
     
     i = 3;
     j = 3;
-    grid[i][j].rockBlock = true;
-    obj = grid[i][j].obj = "rockBlock";
+    grid[i][j].flag = true;
+    obj = grid[i][j].obj = "flag";
     
     i = 1;
     j = 0;
@@ -110,6 +111,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        grid[i][j].checkIsCommand();
                         return;
                     }
                 }
@@ -121,6 +123,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        grid[i][j].checkIsCommand();
                         return;
                     }
                 }
@@ -133,6 +136,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        grid[i][j].checkIsCommand();
                         return;
                     }
                 }
@@ -144,6 +148,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                       //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        grid[i][j].checkIsCommand();
                         return;
                     }
                 }
