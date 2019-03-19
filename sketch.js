@@ -48,19 +48,19 @@ function setup(){
     j = 0;
     obj = grid[i][j].wall = true;
     
-    i = 3;
-    j = 5;
+    i = 2;
+    j = 6;
     grid[i][j].flag = true;
     obj = grid[i][j].obj = "flag";
     
-    i = 2;
-    j = 3;
+    i = 3;
+    j = 4;
     grid[i][j].isBlock = true;
     obj = grid[i][j].obj = "isBlock";
     grid[i][j].pushable = true;
     
-    i = 1;
-    j = 3;
+    i = 3;
+    j = 5;
     grid[i][j].pushBlock = true;
     obj = grid[i][j].obj = "pushBlock";
     grid[i][j].pushable = true;
@@ -73,6 +73,7 @@ function setup(){
     
     i = 1;
     j = 0;
+    console.log("was ran from here");
     grid[i][j].checkIsCommand();
     
 }
@@ -111,6 +112,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        console.log("was ran from here");
                         grid[i][j].checkIsCommand();
                         return;
                     }
@@ -123,6 +125,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        console.log("was ran from here");
                         grid[i][j].checkIsCommand();
                         return;
                     }
@@ -136,6 +139,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        console.log("was ran from here");
                         grid[i][j].checkIsCommand();
                         return;
                     }
@@ -148,6 +152,7 @@ function keyTyped() {
                     if(grid[i][j].check(i, j, dir)){
                       //  console.log("3");
                         grid[i][j].playerMove(i, j, dir);
+                        console.log("was ran from here");
                         grid[i][j].checkIsCommand();
                         return;
                     }
