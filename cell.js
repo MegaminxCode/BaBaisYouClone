@@ -155,7 +155,7 @@ Cell.prototype.contains = function (x, y) {
 };
 
 Cell.prototype.playerMove = function (i,j, dir) {
-    if(grid[i][j][dir] == "up"){
+    if(grid[i][j][dir] === "up"){
         console.log("playerMove Up is fine");
         grid[i][j].player = false;
         grid[i][j].obj = "";
@@ -167,7 +167,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         //Moving twice fix
         return;
     }
-    if(grid[i][j][dir] == "left"){
+    if(grid[i][j][dir] === "left"){
         console.log("playerMove Left is fine");
         grid[i][j].player = false;
         grid[i][j].obj = "";
@@ -179,7 +179,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         //Moving twice fix
         return;
     }
-    if(grid[i][j][dir] == "down"){
+    if(grid[i][j][dir] === "down"){
         console.log("playerMove Down is fine");
         grid[i][j].player = false;
         grid[i][j].obj = "";
@@ -191,7 +191,7 @@ Cell.prototype.playerMove = function (i,j, dir) {
         //Moving twice fix
         return;
     }
-    if(grid[i][j][dir] == "right"){
+    if(grid[i][j][dir] === "right"){
         console.log("playerMove Right is fine");
         grid[i][j].player = false;
         grid[i][j].obj = "";
@@ -212,18 +212,18 @@ Cell.prototype.check = function (i, j, dir) {
     //console.log(grid[i][j].rock);
     //console.log(grid[i][j].obj);
     
-    if(grid[i][j][dir] == "up"){
+    if(grid[i][j][dir] === "up"){
         console.log("check  up");
         var yoff = -1;
         j = j + yoff;
         if(j < 0){
             return;
         }else{
-            if(grid[i][j].stop == true){
+            if(grid[i][j].stop){
                 console.log("there's a wall");
                 return false;
                 
-            }else if(grid[i][j].obj == ""){
+            }else if(grid[i][j].obj === ""){
                 //console.log("check false is fine");
                 return true;
                 
@@ -246,18 +246,18 @@ Cell.prototype.check = function (i, j, dir) {
             }
         }
     }
-    if(grid[i][j][dir] == "left"){
+    if(grid[i][j][dir] === "left"){
         console.log("check  left");
         var xoff = -1;
         i = i + xoff;
         if(i < 0){
             return;
         }else{
-            if(grid[i][j].stop == true){
+            if(grid[i][j].stop){
                 console.log("there's a wall");
                 return false;
                 
-            }else if(grid[i][j].obj == ""){
+            }else if(grid[i][j].obj === ""){
                 //console.log("check false is fine");
                 return true;
             }else{
@@ -280,18 +280,18 @@ Cell.prototype.check = function (i, j, dir) {
             }
         }
     }
-    if(grid[i][j][dir] == "down"){
+    if(grid[i][j][dir] === "down"){
         console.log("check  down");
         var yoff3 = 1;
         j = j + yoff3;
         if(j >= cols){
             return;
         }else{
-            if(grid[i][j].stop == true){
+            if(grid[i][j].stop){
                 console.log("there's a wall");
                 return false;
                 
-            }else if(grid[i][j].obj == ""){
+            }else if(grid[i][j].obj === ""){
                 //console.log("check false is fine");
                 return true;
                 
@@ -314,18 +314,18 @@ Cell.prototype.check = function (i, j, dir) {
             }
         }
     }
-    if(grid[i][j][dir] == "right"){
+    if(grid[i][j][dir] === "right"){
         console.log("check  right");
         var xoff3 = 1;
         i = i + xoff3;
         if(i >= rows){
             return false;
         }else{
-            if(grid[i][j].stop == true){
+            if(grid[i][j].stop){
                 console.log("there's a wall");
                 return false;
                 
-            } else if(grid[i][j].obj == ""){
+            } else if(grid[i][j].obj === ""){
                 //console.log("check true is fine");
                 return true;
                 
@@ -353,8 +353,10 @@ Cell.prototype.check = function (i, j, dir) {
 };
 
 Cell.prototype.checkIsCommand = function () {
-    for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
+    var i;
+    var j;
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
             if(grid[i][j].isBlock){
                 console.log("iscommand being ran");
                 var xoff1 = 1;
@@ -368,15 +370,18 @@ Cell.prototype.checkIsCommand = function () {
                 }else{
                     console.log(grid[i + xoff1][j].obj);
                     console.log(grid[i + xoff2][j].obj);
+                    console.log(grid[i][j + yoff1].obj);
+                    console.log(grid[i][j + yoff2].obj);
                 }
                 
                 console.log(grid[i][j].commandWasRanX);
+                console.log(grid[i][j].commandWasRanY);
                  console.log(grid[i][j].obj);
                 if(i + xoff1 >= cols || i + xoff2 < 0 || j + yoff1 >= rows || j + yoff2 < 0){
                     console.log("out of bounds2");
                     return false;
                 }else if(grid[i][j].commandWasRanX  !== ""){
-                    if (grid[i + xoff1][j].obj == "" && grid[i + xoff2][j].obj == ""){
+                    if (grid[i + xoff1][j].obj === "" && grid[i + xoff2][j].obj === ""){
                         
                         grid[i][j].commandWasRanX  = "";
                         i = i + xoff1;
@@ -388,13 +393,13 @@ Cell.prototype.checkIsCommand = function () {
                         grid[i][j].obj = "";
             
                         return false;
-                    }else if (grid[i + xoff1][j].obj !== "pushBlock" && grid[i + xoff2][j].obj !== "pushBlock"){
-                         if(grid[i + xoff1][j].obj == "" || grid[i + xoff1][j].obj == "player"){
+                    }else if (!grid[i + xoff1][j].hasACommand && !grid[i + xoff2][j].hasACommand){
+                         if(grid[i + xoff1][j].obj === "" || grid[i + xoff1][j].obj === "player"){
                             console.log("false");
                             
-                            grid[i][j].pushWasRanX  = false;
+                            grid[i][j].commandWasRanX  = "";
                             i = i + xoff1;
-                            if(grid[i][j].obj == "pushBlock"){
+                            if(grid[i][j].obj === "pushBlock"){
                                 console.log("what i didnt think it is 3");
                                 console.log(grid[i + xoff2][j].wasPushed);
                                 grid[i][j].obj = grid[i + xoff2][j].wasPushed;
@@ -410,13 +415,13 @@ Cell.prototype.checkIsCommand = function () {
                             }
                             
                             return false;
-                        }else if(grid[i + xoff2][j].obj == "" || grid[i + xoff2][j].obj == "player"){
+                        }else if(grid[i + xoff2][j].obj === "" || grid[i + xoff2][j].obj === "player"){
                             console.log("false2");
                             
                             
-                            grid[i][j].pushWasRanX  = false;
+                            grid[i][j].commandWasRanX  = "";
                             i = i + xoff2;
-                            if(grid[i][j].obj == "pushBlock"){
+                            if(grid[i][j].obj === "pushBlock"){
                                 console.log("what i didnt think it is 2");
                                 console.log(grid[i + xoff1][j].wasPushed);
                                 console.log(grid[i + 2][j].obj);
@@ -435,7 +440,7 @@ Cell.prototype.checkIsCommand = function () {
                             
                             return false;
                         }
-                        grid[i][j].pushWasRanX  = false;
+                        grid[i][j].commandWasRanX  = "";
                         i = i + xoff1;
                         
                             console.log("what i think it is");
@@ -447,12 +452,12 @@ Cell.prototype.checkIsCommand = function () {
                     
                     return false;
                 }
-                else if(grid[i + xoff1][j].obj == "" || grid[i + xoff1][j].obj == "player"){
+                else if(grid[i + xoff1][j].obj === "" || grid[i + xoff1][j].obj === "player"){
                     console.log("false");
                    
-                        grid[i][j].pushWasRanX  = false;
+                        grid[i][j].commandWasRanX  = "";
                         i = i + xoff1;
-                        if(grid[i][j].obj == "pushBlock"){
+                        if(grid[i][j].obj === "pushBlock"){
                             console.log("what i didnt think it is 3");
                             console.log(grid[i + xoff2][j].wasPushed);
                             grid[i][j].obj = grid[i + xoff2][j].wasPushed;
@@ -467,13 +472,13 @@ Cell.prototype.checkIsCommand = function () {
                         }
                     
                     return false;
-                }else if(grid[i + xoff2][j].obj == "" || grid[i + xoff2][j].obj == "player"){
+                }else if(grid[i + xoff2][j].obj === "" || grid[i + xoff2][j].obj === "player"){
                     console.log("false2");
                    
                     
-                        grid[i][j].pushWasRanX  = false;
+                        grid[i][j].commandWasRanX  = "";
                         i = i + xoff2;
-                        if(grid[i][j].obj == "pushBlock"){
+                        if(grid[i][j].obj === "pushBlock"){
                             console.log("what i didnt think it is 2");
                             console.log(grid[i + xoff1][j].wasPushed);
                             console.log(grid[i + 2][j].obj);
@@ -494,162 +499,288 @@ Cell.prototype.checkIsCommand = function () {
                 }else{
                     console.log("i dont know2");
                 }
-                }else if(grid[i + xoff2][j].obj == "pushBlock"){
-                    
-                    
+                }else if(grid[i + xoff2][j].hasACommand){
                     console.log("first run");
                     //console.log(grid[i + xoff2][j].obj);
-                    
-                    
                     //console.log(grid[i + xoff2][j].obj);
                     //console.log(this.i);
                     //console.log(this.j);
-                    grid[i][j].pushWasRanX  = true;
-                    console.log(grid[i][j].pushWasRanX);
+                    grid[i][j].commandWasRanX  = grid[i + xoff2][j].command;
+                    console.log(grid[i][j].commandWasRanX);
                     console.log(grid[i + xoff1][j].obj);
+                    switch(grid[i + xoff2][j].command){
+                        case "this.setPushable":
                     grid[i][j].wasPushed  = grid[i + xoff1][j].obj;
                     console.log(grid[i][j].wasPushed);
                     console.log(grid[i][j].obj);
                     i = i + xoff1;
-                    
                     this.setPushable(i, j, grid[i][j].obj);
+                            break;
+                        case "this.setStop":
+                            grid[i][j].wasStopped  = grid[i + xoff1][j].obj;
+                            console.log(grid[i][j].wasStopped);
+                            i = i + xoff1;
+                            
+                            this.setStop(i, j, grid[i][j].obj);
+                            break;
+                    }
                     
-                    
-                } else if (grid[i + xoff1][j].obj == "pushBlock"){
+                } else if (grid[i + xoff1][j].hasACommand){
                     console.log("second run");
-                    grid[i][j].pushWasRanX  = true;
-                    console.log(grid[i][j].pushWasRanX);
-                    grid[i][j].wasPushed  = grid[i][j].obj;
+                    grid[i][j].commandWasRanX  = grid[i + xoff1][j].command;
+                    console.log(grid[i][j].commandWasRanX);
+                    switch(grid[i + xoff1][j].command){
+                        case "this.setPushable":
+                    
                     console.log(grid[i + xoff2][j].obj);
                     grid[i][j].wasPushed  = grid[i + xoff2][j].obj;
                     console.log(grid[i][j].wasPushed);
                     i = i + xoff2;
                     
                     this.setPushable(i, j, grid[i][j].obj);
+                            break;
+                            
+                        case "this.setStop":
+                            grid[i][j].wasStopped  = grid[i + xoff2][j].obj;
+                            console.log(grid[i][j].wasStopped);
+                            i = i + xoff2;
+                            
+                            this.setStop(i, j, grid[i][j].obj);
+                            break;
+                    }
                 }
                 else if(grid[i][j].commandWasRanY  !== ""){
-                    if (grid[i][j + yoff1].obj == "" && grid[i][j + yoff2].obj == ""){
+                    if (grid[i][j + yoff1].obj === "" && grid[i][j + yoff2].obj === ""){
                         
-                        grid[i][j].pushWasRanY  = false;
+                        
                         j = j + yoff1;
-                        
+                        switch(grid[i][j + yoff2].commandWasRanY){
+                            case"this.setStop":
                         console.log("what i think it is");
-                        console.log(grid[i][j].obj);
-                        grid[i][j].obj = grid[i][j + yoff2].wasPushed;
-                        this.unSetPushable(i, j,  grid[i][j].obj);
+                        console.log(grid[i][j + yoff2].wasStopped);
+                        grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                        this.unSetStop(i, j,  grid[i][j].obj);
                         grid[i][j].obj = "";
-                        
-                        
-                        return false;
-                    }else if (!grid[i][j + yoff1].hasACommand && !grid[i][j + yoff2].hasACommand){
-                        if(grid[i][j + yoff1].obj == "" || grid[i][j + yoff1].obj == "player"){
-                            console.log("false");
-                            
-                            grid[i][j].pushWasRanY  = false;
-                            j = j + yoff1;
-                            if(grid[i][j].obj == "pushBlock"){
-                                console.log("what i didnt think it is 3");
-                                console.log(grid[i][j + yoff2].wasPushed);
-                                grid[i][j].obj = grid[i][j + yoff2].wasPushed;
-                                this.unSetPushable(i, j, grid[i][j].obj);
-                                return false;
-                            }else{
+                                break;
+                            case "this.setPushable":
                                 console.log("what i think it is");
                                 console.log(grid[i][j].obj);
                                 grid[i][j].obj = grid[i][j + yoff2].wasPushed;
                                 this.unSetPushable(i, j,  grid[i][j].obj);
                                 grid[i][j].obj = "";
+                                break;
+                        }
+                        grid[i][j + yoff2].commandWasRanY  = "";
+                        return false;
+                    }else if (!grid[i][j + yoff1].hasACommand && !grid[i][j + yoff2].hasACommand){
+                         if(grid[i][j + yoff1].obj === "" || grid[i][j + yoff1].obj === "player"){
+                            console.log("false");
+                            j = j + yoff1;
+                            switch(grid[i][j + yoff2].commandWasRanY){
+                                case "this.setStop":
+                                    console.log("what i didnt think it is 3");
+                                    console.log(grid[i][j + yoff2].wasStopped);
+                                    grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                                    this.unSetStop(i, j, grid[i][j].obj);
+                                    grid[i][j].obj = "";
+                                    break;
+                                case "this.setPushable":
+                                    console.log("what i think it is");
+                                    console.log(grid[i][j].obj);
+                                    grid[i][j].obj = grid[i][j + yoff2].wasPushed;
+                                    this.unSetPushable(i, j,  grid[i][j].obj);
+                                    grid[i][j].obj = "";
+                                    break;
                             }
-                            
+                            grid[i][j + yoff2].commandWasRanY  = "";
+                            console.log(grid[i][j].commandWasRanY);
                             return false;
-                        }else if(grid[i][j + yoff2].obj == "" || grid[i][j + yoff2].obj == "player"){
+                        }else if(grid[i][j + yoff2].obj === "" || grid[i][j + yoff2].obj === "player"){
                             console.log("false2");
                             
                             
-                            grid[i][j].pushWasRanY  = false;
-                            j = j + yoff2;
-                            if(grid[i][j].obj == "pushBlock"){
-                                console.log("what i didnt think it is 2");
-                                console.log(grid[i + xoff1][j].wasPushed);
-                                console.log(grid[i + 2][j].obj);
-                                grid[i][j + 2].obj = grid[i][j + yoff1].wasPushed;
-                                console.log(grid[i + 2][j].obj = grid[i + xoff1][j].wasPushed);
-                                this.unSetPushable(i, j, grid[i][j + 2].obj);
-                                grid[i][j + 2].obj = "";
-                            }else{
-                                console.log("what i didnt think it is");
-                                console.log(grid[i][j].obj = grid[i + xoff1][j].wasPushed);
-                                grid[i][j].obj = grid[i][j + yoff1].wasPushed;
-                                this.unSetPushable(i, j, grid[i][j].obj);
-                                grid[i][j].obj = "";
+                            
+                           
+                            switch(grid[i][j].commandWasRanY){
+                                case "this.setStop":
+                                    console.log("what i didnt think it is 2");
+                                    console.log(grid[i][j + yoff1].wasStopped);
+                                    console.log(grid[i][j + yoff1].obj);
+                                    
+                                    console.log(grid[i][j + yoff1].wasStopped);
+                                    this.unSetStop(i, j + yoff1, grid[i][j + yoff1].obj);
+                                    
+                                    break;
+                                case "this.setPushable":
+                                    console.log("what i didnt think it is");
+                                    console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
+                                    grid[i][j].obj = grid[i][j + yoff1].wasPushed;
+                                    this.unSetPushable(i, j, grid[i][j].obj);
+                                    grid[i][j].obj = "";
+                                    break;
                             }
                             
-                            
+                            grid[i][j + yoff1].commandWasRanY  = "";
                             return false;
-                        }
-                        grid[i][j].commandWasRanY  = "";
-                        j = j + yoff1;
+                        }else{
                         
+                        j = j + yoff1;
+                        switch(grid[i][j + yoff2].commandWasRanY){
+                            case "this.setStop":
                         console.log("what i think it is");
                         console.log(grid[i][j].obj);
                         
-                        this.unSetPushable(i, j,  grid[i][j].obj);
-                        
-                        
+                        this.unSetStop(i, j,  grid[i][j].obj);
+                        grid[i][j + yoff2].commandWasRanY  = "";
+                                break;
+                            case "this.setPushable":
+                                console.log("what i think it is");
+                                console.log(grid[i][j].obj);
+                                
+                                this.unSetPushable(i, j,  grid[i][j].obj);
+                                grid[i][j + yoff2].commandWasRanY  = "";
+                                break;
+                        }
+                        }
                         
                         return false;
                     }
-                    else if(grid[i][j + yoff1].obj == "" || grid[i][j + yoff1].obj == "player"){
+                    else if(grid[i][j + yoff1].obj === "" || grid[i][j + yoff1].obj === "player"){
                         console.log("false");
-                        
-                        grid[i][j].pushWasRanY  = false;
                         j = j + yoff1;
-                        if(grid[i][j].obj == "pushBlock"){
+                        switch(grid[i][j + yoff2].commandWasRanY){
+                            case "this.setStop":
                             console.log("what i didnt think it is 3");
-                            console.log(grid[i][j + yoff2].wasPushed);
-                            grid[i][j].obj = grid[i][j + yoff2].wasPushed;
-                            this.unSetPushable(i, j, grid[i][j].obj);
+                            console.log(grid[i][j + yoff2].wasStopped);
+                            grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                            this.unSetStop(i, j, grid[i][j].obj);
                             grid[i][j].obj = "";
-                            return false;
-                        }else{
+                                break;
+                            case "this.setPushable":
                             console.log("what i think it is");
                             console.log(grid[i][j].obj);
                             grid[i][j].obj = grid[i][j + yoff2].wasPushed;
                             this.unSetPushable(i, j,  grid[i][j].obj);
                             grid[i][j].obj = "";
+                                break;
                         }
-                        
+                        grid[i][j + yoff2].commandWasRanY  = "";
+                        console.log(grid[i][j].commandWasRanY);
                         return false;
-                    }else if(grid[i][j + yoff2].obj == "" || grid[i][j + yoff2].obj == "player"){
+                    }else if(grid[i][j + yoff2].obj === "" || grid[i][j + yoff2].obj === "player"){
                         console.log("false2");
                         
                         
-                        grid[i][j].pushWasRanY  = false;
+                        
                         j = j + yoff2;
-                        if(grid[i][j].obj == "pushBlock"){
+                        switch(grid[i][j + yoff1].commandWasRanY){
+                            case "this.setStop":
                             console.log("what i didnt think it is 2");
-                            console.log(grid[i + xoff1][j].wasPushed);
+                            console.log(grid[i + xoff1][j].wasStopped);
                             console.log(grid[i + 2][j].obj);
-                            grid[i][j + 2].obj = grid[i][j + yoff1].wasPushed;
-                            console.log(grid[i + 2][j].obj = grid[i + xoff1][j].wasPushed);
-                            this.unSetPushable(i, j, grid[i][j + 2].obj);
-                            grid[i][j + 2].obj = "";
-                        }else{
+                            grid[i][j].obj = grid[i][j + yoff1].wasStopped;
+                            console.log(grid[i + 2][j].obj = grid[i + xoff1][j].wasStopped);
+                            this.unSetStop(i, j, grid[i][j + 2].obj);
+                            grid[i][j].obj = "";
+                                break;
+                            case "this.setPushable":
                             console.log("what i didnt think it is");
                             console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
                             grid[i][j].obj = grid[i][j + yoff1].wasPushed;
                             this.unSetPushable(i, j, grid[i][j].obj);
                             grid[i][j].obj = "";
+                                break;
                         }
                         
-                        
+                        grid[i][j + yoff1].commandWasRanY  = "";
                         return false;
+                    }else if(grid[i][j + yoff2].hasACommand){
+                        console.log("first run");
+                        //console.log(grid[i + xoff2][j].obj);
+                        //console.log(grid[i + xoff2][j].obj);
+                        //console.log(this.i);
+                        //console.log(this.j);
+                        
+                        console.log(grid[i][j].commandWasRanY);
+                        if(grid[i][j].commandWasRanY !== grid[i][j + yoff2].command){
+                        switch(grid[i][j + yoff2].command){
+                            case "this.setPushable":
+                               
+                                j = j + yoff1;
+                                
+                                this.unSetStop(i, j, grid[i][j].obj);
+                                console.log(grid[i + xoff1][j].obj);
+                                grid[i][j + yoff2].wasPushed  = grid[i][j].obj;
+                                console.log(grid[i][j].wasPushed);
+                                console.log(grid[i][j].obj);
+                                
+                                
+                                this.setPushable(i, j, grid[i][j].obj);
+                                break;
+                            case "this.setStop":
+                                
+                                j = j + yoff1;
+                                //grid[i][j].wasPsuhed needs to be accesses somwhow.
+                                this.unSetPushable(i, j, grid[i][j].obj);
+                                grid[i][j + yoff2].wasStopped  = grid[i][j].obj;
+                                
+                                
+                                this.setStop(i, j, grid[i][j].obj);
+                                break;
+                        }
+                            grid[i][j + yoff2].commandWasRanY  = grid[i][j - 2].command;
+                        }
+                        
+                        console.log(grid[i][j + yoff2].commandWasRanY);
+                        console.log(grid[i][j + yoff2].commandWasRanY);
+                        console.log(grid[i][j + yoff2].wasStopped);
+                        console.log(grid[i][j + yoff2].wasPushed);
+                        return true;
+                        
+                    } else if (grid[i][j + yoff1].hasACommand){
+                        console.log("second run");
+                        
+                        console.log(grid[i][j].commandWasRanY);
+                        if(grid[i][j].commandWasRanY !== grid[i][j + yoff1].command){
+                        switch(grid[i][j + yoff1].command){
+                                
+                            case "this.setPushable":
+                                //console.log("this stuff works");
+                                console.log(grid[i][j + yoff2].obj);
+                                
+                                console.log(grid[i][j].wasPushed);
+                                j = j + yoff2;
+                                
+                                this.unSetStop(i, j, grid[i][j].obj);
+                                
+                                console.log(grid[i][j + yoff2].obj);
+                                grid[i][j + yoff1].wasPushed  = grid[i][j].obj;
+                                console.log(grid[i][j].wasPushed);
+                                
+                                
+                                this.setPushable(i, j, grid[i][j].obj);
+                                break;
+                            case "this.setStop":
+                                //  console.log("this stuff  TOTALLY works");
+                                
+                                j = j + yoff2;
+                                
+                                this.unSetPushable(i, j, grid[i][j].obj);
+                                grid[i][j + yoff1].wasStopped  = grid[i][j].obj;
+                                
+                                
+                                this.setStop(i, j, grid[i][j].obj);
+                                break;
+                        }
+                            grid[i][j + yoff1].commandWasRanY  = grid[i][j + 2].command;
+                        }
+                       
+                        console.log(grid[i][j].obj);
+                        return true;
                     }else{
                         console.log("i dont know2");
                     }
                 }else if(grid[i][j + yoff2].hasACommand){
-                    
-                    
                     console.log("first run");
                     //console.log(grid[i + xoff2][j].obj);
                     //console.log(grid[i + xoff2][j].obj);
@@ -657,24 +788,37 @@ Cell.prototype.checkIsCommand = function () {
                     //console.log(this.j);
                     grid[i][j].commandWasRanY  = grid[i][j + yoff2].command;
                     console.log(grid[i][j].commandWasRanY);
+                    if(grid[i][j + yoff1].obj !== ""){
+                    switch(grid[i][j + yoff2].command){
+                        case "this.setPushable":
+                            console.log(grid[i + xoff1][j].obj);
+                            grid[i][j].wasPushed  = grid[i][j + yoff1].obj;
+                            console.log(grid[i][j].wasPushed);
+                            console.log(grid[i][j].obj);
+                            j = j + yoff1;
                     
-                    console.log(grid[i + xoff1][j].obj);
-                    grid[i][j].wasPushed  = grid[i][j + yoff1].obj;
-                    console.log(grid[i][j].wasPushed);
-                    console.log(grid[i][j].obj);
-                    j = j + yoff1;
-                    
-                    this.setPushable(i, j, grid[i][j].obj);
+                            this.setPushable(i, j, grid[i][j].obj);
+                            break;
+                        case "this.setStop":
+                            grid[i][j].wasStopped  = grid[i][j + yoff1].obj;
+                            j = j + yoff1;
+                            
+                            this.setStop(i, j, grid[i][j].obj);
+                            break;
+                    }
+                    }
                     return true;
                     
                 } else if (grid[i][j + yoff1].hasACommand){
                     console.log("second run");
+                    if(grid[i][j + yoff2].obj !== ""){
                     grid[i][j].commandWasRanY  = grid[i][j + yoff1].command;
                     console.log(grid[i][j].commandWasRanY);
+                    
                     switch(grid[i][j + yoff1].command){
                             
                         case "this.setPushable":
-                            console.log("this stuff works");
+                            //console.log("this stuff works");
                            
                             console.log(grid[i][j + yoff2].obj);
                             grid[i][j].wasPushed  = grid[i][j + yoff2].obj;
@@ -684,12 +828,13 @@ Cell.prototype.checkIsCommand = function () {
                             this.setPushable(i, j, grid[i][j].obj);
                             break;
                         case "this.setStop":
-                            console.log("this stuff  TOTALLY works");
+                          //  console.log("this stuff  TOTALLY works");
                             grid[i][j].wasStopped  = grid[i][j + yoff2].obj;
                             j = j + yoff2;
                             
                             this.setStop(i, j, grid[i][j].obj);
                             break;
+                    }
                     }
                     return true;
                 }else{
@@ -708,7 +853,7 @@ Cell.prototype.setPushable = function (i, j, obj) {
     for(i = 0; i < cols; i++){
         for(j = 0; j < rows; j++){
             // make sure to have 2 = or else it applies instead of comparing
-            if(grid[i][j].obj == t){
+            if(grid[i][j].obj === t){
                 grid[i][j].pushable = true;
             }
         }
@@ -721,7 +866,7 @@ Cell.prototype.unSetPushable = function (i, j, obj) {
     console.log(t);
     for(i = 0; i < cols; i++){
         for(j = 0; j < rows; j++){
-            if(grid[i][j].obj == t){
+            if(grid[i][j].obj === t){
                 grid[i][j].pushable = false;
             }
         }
@@ -736,7 +881,7 @@ Cell.prototype.setStop = function (i, j, obj) {
     for(i = 0; i < cols; i++){
         for(j = 0; j < rows; j++){
             // make sure to have 2 = or else it applies instead of comparing
-            if(grid[i][j].obj == t){
+            if(grid[i][j].obj === t){
                 grid[i][j].stop = true;
             }
         }
@@ -749,7 +894,7 @@ Cell.prototype.unSetStop = function (i, j, obj) {
     console.log(t);
     for(i = 0; i < cols; i++){
         for(j = 0; j < rows; j++){
-            if(grid[i][j].obj == t){
+            if(grid[i][j].obj === t){
                 grid[i][j].stop = false;
             }
         }
@@ -760,23 +905,30 @@ Cell.prototype.unSetStop = function (i, j, obj) {
 Cell.prototype.push = function (i, j, dir, obj, pushable) {
     console.log(grid[i][j].pushable);
     console.log("push 1");
-    if(grid[i][j].pushable == true){
+    if(grid[i][j].pushable === true){
         var t = grid[i][j].obj;
         var u = grid[i][j].wasPushed;
-        var v = grid[i][j].pushWasRanX;
-        var w = grid[i][j].pushWasRanY;
+        var v = grid[i][j].commandWasRanX;
+        var w = grid[i][j].commandWasRanY;
+        var tt = grid[i][j].hasACommand;
+        var uu = grid[i][j].wasStopped;
+        var vv = grid[i][j].command;
+        console.log(uu);
         console.log(t);
         console.log("t");
         console.log(u);
         console.log("u");
-        if(grid[i][j][dir] == "up"){
+        if(grid[i][j][dir] === "up"){
             console.log("Push Up is fine");
             grid[i][j][t]  = false;
             grid[i][j].obj = "";
             grid[i][j].wasPushed = "";
             grid[i][j].pushable = false;
-            grid[i][j].pushWasRanX = false;
-            grid[i][j].pushWasRanY = false;
+            grid[i][j].commandWasRanX = "";
+            grid[i][j].commandWasRanY = "";
+            grid[i][j].hasACommand = false;
+            grid[i][j].wasStopped = "";
+            grid[i][j].command = "";
             var yoff = -1;
             j = j + yoff;
             
@@ -784,20 +936,26 @@ Cell.prototype.push = function (i, j, dir, obj, pushable) {
             grid[i][j].obj = t;
             grid[i][j].wasPushed = u;
             grid[i][j].pushable = true;
-            grid[i][j].pushWasRanX = v;
-            grid[i][j].pushWasRanY = w;
+            grid[i][j].commandWasRanX = v;
+            grid[i][j].commandWasRanY = w;
+            grid[i][j].hasACommand = tt;
+            grid[i][j].wasStopped = uu;
+            grid[i][j].command = vv;
             //console.log("checkcommand");
             
             return true;
         }
-        if(grid[i][j][dir] == "left"){
+        if(grid[i][j][dir] === "left"){
             console.log("Push Left is fine");
             grid[i][j][t]  = false;
             grid[i][j].obj = "";
             grid[i][j].wasPushed = "";
             grid[i][j].pushable = false;
-            grid[i][j].pushWasRanX = false;
-            grid[i][j].pushWasRanY = false;
+            grid[i][j].commandWasRanX = "";
+            grid[i][j].commandWasRanY = "";
+            grid[i][j].hasACommand = false;
+            grid[i][j].wasStopped = "";
+            grid[i][j].command = "";
             var xoff = -1;
             i = i + xoff;
             
@@ -805,18 +963,24 @@ Cell.prototype.push = function (i, j, dir, obj, pushable) {
             grid[i][j].obj = t;
             grid[i][j].wasPushed = u;
             grid[i][j].pushable = true;
-            grid[i][j].pushWasRanX = v;
-            grid[i][j].pushWasRanY = w;
+            grid[i][j].commandWasRanX = v;
+            grid[i][j].commandWasRanY = w;
+            grid[i][j].hasACommand = tt;
+            grid[i][j].wasStopped = uu;
+            grid[i][j].command = vv;
             return true;
         }
-        if(grid[i][j][dir] == "down"){
+        if(grid[i][j][dir] === "down"){
             console.log("Push Down is fine");
             grid[i][j][t] = false;
             grid[i][j].obj = "";
             grid[i][j].wasPushed = "";
             grid[i][j].pushable = false;
-            grid[i][j].pushWasRanX = false;
-            grid[i][j].pushWasRanY = false;
+            grid[i][j].commandWasRanX = "";
+            grid[i][j].commandWasRanY = "";
+            grid[i][j].hasACommand = false;
+            grid[i][j].wasStopped = "";
+            grid[i][j].command = "";
             var yoff4 = 1;
             j = j + yoff4;
             
@@ -824,18 +988,24 @@ Cell.prototype.push = function (i, j, dir, obj, pushable) {
             grid[i][j].obj = t;
             grid[i][j].wasPushed = u;
             grid[i][j].pushable = true;
-            grid[i][j].pushWasRanX = v;
-            grid[i][j].pushWasRanY = w;
+            grid[i][j].commandWasRanX = v;
+            grid[i][j].commandWasRanY = w;
+            grid[i][j].hasACommand = tt;
+            grid[i][j].wasStopped = uu;
+            grid[i][j].command = vv;
             return true;
         }
-        if(grid[i][j][dir] == "right"){
+        if(grid[i][j][dir] === "right"){
             console.log("Push Right is fine");
             grid[i][j][t] = false;
             grid[i][j].obj = "";
             grid[i][j].wasPushed = "";
             grid[i][j].pushable = false;
-            grid[i][j].pushWasRanX = false;
-            grid[i][j].pushWasRanY = false;
+            grid[i][j].commandWasRanX = "";
+            grid[i][j].commandWasRanY = "";
+            grid[i][j].hasACommand = false;
+            grid[i][j].wasStopped = "";
+            grid[i][j].command = "";
             var xoff4 = 1;
             i = i + xoff4;
             
@@ -843,8 +1013,11 @@ Cell.prototype.push = function (i, j, dir, obj, pushable) {
             grid[i][j].obj = t;
             grid[i][j].wasPushed = u;
             grid[i][j].pushable = true;
-            grid[i][j].pushWasRanX = v;
-            grid[i][j].pushWasRanY = w;
+            grid[i][j].commandWasRanX = v;
+            grid[i][j].commandWasRanY = w;
+            grid[i][j].hasACommand = tt;
+            grid[i][j].wasStopped = uu;
+            grid[i][j].command = vv;
             //if(t == "isBlock"){
              //   this.checkIsCommand();
            // }

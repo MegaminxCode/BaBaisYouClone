@@ -54,8 +54,9 @@ function setup(){
     grid[i][j].rock = true;
     obj = grid[i][j].obj = "rock";
     
-    i = 3;
-    j = 5;
+    
+    i = 4;
+    j = 6;
     grid[i][j].stopBlock = true;
     obj = grid[i][j].obj = "stopBlock";
     grid[i][j].command = "this.setStop";
@@ -69,8 +70,8 @@ function setup(){
     obj = grid[i][j].obj = "isBlock";
     grid[i][j].pushable = true;
     
-    i = 4;
-    j = 6;
+    i = 3;
+    j = 5;
     grid[i][j].pushBlock = true;
     obj = grid[i][j].obj = "pushBlock";
     grid[i][j].command = "this.setPushable";
@@ -83,6 +84,7 @@ function setup(){
     j = 3;
     grid[i][j].rock = true;
     obj = grid[i][j].obj = "rock";
+    
     
     i = 1;
     j = 0;
@@ -119,8 +121,8 @@ function keyTyped() {
         for (var j = 0; j < rows; j++) {
             if (key === 'w' || key === 'W') {
                 //console.log("1");
-                grid[i][j][dir] = "up";
                 if(grid[i][j].player == true){
+                    grid[i][j][dir] = "up";
                     // console.log("2");
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
@@ -132,8 +134,8 @@ function keyTyped() {
                 }
             } else if (key === 'a' || key === 'A') {
                 //console.log("1");
-                grid[i][j][dir] = "left";
                 if(grid[i][j].player == true){
+                    grid[i][j][dir] = "left";
                     // console.log("2");
                     if(grid[i][j].check(i, j, dir)){
                         //  console.log("3");
@@ -145,8 +147,8 @@ function keyTyped() {
                 }
             }else if (key === 's' || key === 'S') {
                 //console.log("1");
-                grid[i][j][dir] = "down";
                 if(grid[i][j].player == true){
+                    grid[i][j][dir] = "down";
                     // console.log("2");
                     //console.log(grid[i][j].obj);
                     if(grid[i][j].check(i, j, dir)){
@@ -159,8 +161,8 @@ function keyTyped() {
                 }
             }else if (key === 'd' || key === 'D') {
                 //console.log("1");
-                grid[i][j][dir] = "right";
                 if(grid[i][j].player == true){
+                    grid[i][j][dir] = "right";
                    // console.log("2");
                     if(grid[i][j].check(i, j, dir)){
                       //  console.log("3");
