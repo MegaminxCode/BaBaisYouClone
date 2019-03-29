@@ -1,7 +1,9 @@
 
 function make2DArray (cols, rows) {
  var arr = new Array(cols);
- for (var i = 0; i < arr.length; i++) {
+ var arrLength = arr.length;
+ var i;
+ for (i = 0; i < arrLength; i++) {
 	arr[i] = new Array(rows);
 
 	}	
@@ -10,6 +12,7 @@ function make2DArray (cols, rows) {
 
 
 var grid;
+var a;
 var cols;
 var rows;
 var w = 30;
@@ -22,17 +25,18 @@ function setup(){
 	rows = 8;
 	
 	grid = make2DArray(cols, rows);
-    
-	for (var i = 0; i < cols; i++) {
-		for (var j = 0; j < rows; j++) {
+    var i;
+    var j;
+	for (i = 0; i < cols; i++) {
+		for (j = 0; j < rows; j++) {
 			
 			grid[i][j] = new Cell(i, j, w);
 			
 		}
 	}
 	
-    for ( i = 0; i < cols; i++) {
-        for ( j = 0; j < rows; j++) {
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
             a = "color" + 15;
             grid[i][j][a] = true;
             grid[i][j].obj = "";
@@ -95,7 +99,7 @@ function setup(){
 
 
 
-window.addEventListener("contextmenu", function(e) { e.preventDefault(); })
+window.addEventListener("contextmenu", function(e) { e.preventDefault(); });
 function mousePressed () {
 	
 	
@@ -117,8 +121,10 @@ function mousePressed () {
 
 function keyTyped() {
     //Controls wasd
-    for (var i = 0; i < cols; i++) {
-        for (var j = 0; j < rows; j++) {
+    var i;
+    var j;
+    for (i = 0; i < cols; i++) {
+        for (j = 0; j < rows; j++) {
             if (key === 'w' || key === 'W') {
                 //console.log("1");
                 if(grid[i][j].player == true){
@@ -179,8 +185,10 @@ function keyTyped() {
 
 function draw(){
 	background(255);
-	for (var i = 0; i < cols; i++) {
-		for (var j = 0; j < rows; j++) {
+    var i;
+    var j;
+	for (i = 0; i < cols; i++) {
+		for (j = 0; j < rows; j++) {
 			
 			grid[i][j].show();
 		}

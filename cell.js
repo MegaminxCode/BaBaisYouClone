@@ -217,7 +217,8 @@ Cell.prototype.check = function (i, j, dir) {
         var yoff = -1;
         j = j + yoff;
         if(j < 0){
-            return;
+            
+            return false;
         }else{
             if(grid[i][j].stop){
                 console.log("there's a wall");
@@ -251,7 +252,7 @@ Cell.prototype.check = function (i, j, dir) {
         var xoff = -1;
         i = i + xoff;
         if(i < 0){
-            return;
+            return false;
         }else{
             if(grid[i][j].stop){
                 console.log("there's a wall");
@@ -285,7 +286,7 @@ Cell.prototype.check = function (i, j, dir) {
         var yoff3 = 1;
         j = j + yoff3;
         if(j >= cols){
-            return;
+            return false;
         }else{
             if(grid[i][j].stop){
                 console.log("there's a wall");
