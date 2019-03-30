@@ -360,6 +360,7 @@ Cell.prototype.checkIsCommand = function () {
     var xoff2 = -1;
     var yoff1 = 1;
     var yoff2 = -1;
+    var temp;
     for (i = 0; i < cols; i++) {
         for (j = 0; j < rows; j++) {
             if(grid[i][j].isBlock){
@@ -561,11 +562,11 @@ Cell.prototype.checkIsCommand = function () {
                         j = j + yoff1;
                         switch(grid[i][j + yoff2].commandWasRanY){
                             case"this.setStop":
-                        console.log("what i think it is");
-                        console.log(grid[i][j + yoff2].wasStopped);
-                        grid[i][j].obj = grid[i][j + yoff2].wasStopped;
-                        this.unSetStop(i, j,  grid[i][j].obj);
-                        grid[i][j].obj = "";
+                                console.log("what i think it is");
+                                console.log(grid[i][j + yoff2].wasStopped);
+                                grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                                this.unSetStop(i, j,  grid[i][j].obj);
+                                grid[i][j].obj = "";
                                 break;
                             case "this.setPushable":
                                 console.log("what i think it is");
@@ -576,7 +577,33 @@ Cell.prototype.checkIsCommand = function () {
                                 break;
                         }
                         grid[i][j + yoff2].commandWasRanY  = "";
-                        return false;
+                        break;
+                    }else if (grid[i][j + yoff1].hasACommand && grid[i][j + yoff2].hasACommand){
+                        
+                        
+                        j = j + yoff1;
+                        switch(grid[i][j + yoff2].commandWasRanY){
+                            case"this.setStop":
+                                console.log("what i think it is");
+                                console.log(grid[i][j + yoff2].wasStopped);
+                               temp = grid[i][j].obj;
+                                grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                                this.unSetStop(i, j,  grid[i][j].obj);
+                                grid[i][j].obj = temp;
+                                temp = "";
+                                break;
+                            case "this.setPushable":
+                                console.log("what i think it is");
+                                console.log(grid[i][j].obj);
+                               temp =  grid[i][j].obj;
+                                grid[i][j].obj = grid[i][j + yoff2].wasPushed;
+                                this.unSetPushable(i, j,  grid[i][j].obj);
+                                grid[i][j].obj = temp;
+                                temp = "";
+                                break;
+                        }
+                        grid[i][j + yoff2].commandWasRanY  = "";
+                        break;
                     }else if (!grid[i][j + yoff1].hasACommand && !grid[i][j + yoff2].hasACommand){
                          if(grid[i][j + yoff1].obj === "" || grid[i][j + yoff1].obj === "player"){
                             console.log("false");
@@ -599,7 +626,7 @@ Cell.prototype.checkIsCommand = function () {
                             }
                             grid[i][j + yoff2].commandWasRanY  = "";
                             console.log(grid[i][j].commandWasRanY);
-                            return false;
+                            break;
                         }else if(grid[i][j + yoff2].obj === "" || grid[i][j + yoff2].obj === "player"){
                             console.log("false2");
                             
@@ -626,7 +653,7 @@ Cell.prototype.checkIsCommand = function () {
                             }
                             
                             grid[i][j + yoff1].commandWasRanY  = "";
-                            return false;
+                            break;
                         }else{
                         
                         j = j + yoff1;
@@ -648,7 +675,7 @@ Cell.prototype.checkIsCommand = function () {
                         }
                         }
                         
-                        return false;
+                        break;
                     }
                     else if(grid[i][j + yoff1].obj === "" || grid[i][j + yoff1].obj === "player"){
                         console.log("false");
@@ -671,7 +698,7 @@ Cell.prototype.checkIsCommand = function () {
                         }
                         grid[i][j + yoff2].commandWasRanY  = "";
                         console.log(grid[i][j].commandWasRanY);
-                        return false;
+                        break;
                     }else if(grid[i][j + yoff2].obj === "" || grid[i][j + yoff2].obj === "player"){
                         console.log("false2");
                         
@@ -698,7 +725,7 @@ Cell.prototype.checkIsCommand = function () {
                         }
                         
                         grid[i][j + yoff1].commandWasRanY  = "";
-                        return false;
+                        break;
                     }else if(grid[i][j + yoff2].hasACommand){
                         console.log("first run");
                         //console.log(grid[i + xoff2][j].obj);
@@ -740,7 +767,7 @@ Cell.prototype.checkIsCommand = function () {
                         console.log(grid[i][j + yoff2].commandWasRanY);
                         console.log(grid[i][j + yoff2].wasStopped);
                         console.log(grid[i][j + yoff2].wasPushed);
-                        return true;
+                        break;
                         
                     } else if (grid[i][j + yoff1].hasACommand){
                         console.log("second run");
@@ -781,10 +808,13 @@ Cell.prototype.checkIsCommand = function () {
                         }
                        
                         console.log(grid[i][j].obj);
-                        return true;
+                        break;
                     }else{
                         console.log("i dont know2");
                     }
+                }else if (grid[i][j + yoff1].hasACommand && grid[i][j + yoff2].hasACommand){
+                    grid[i][j].commandWasRanY  = "";
+                    break;
                 }else if(grid[i][j + yoff2].hasACommand){
                     console.log("first run");
                     //console.log(grid[i + xoff2][j].obj);
@@ -812,7 +842,7 @@ Cell.prototype.checkIsCommand = function () {
                             break;
                     }
                     }
-                    return true;
+                    break;
                     
                 } else if (grid[i][j + yoff1].hasACommand){
                     console.log("second run");
@@ -841,7 +871,7 @@ Cell.prototype.checkIsCommand = function () {
                             break;
                     }
                     }
-                    return true;
+                    break;
                 }else{
                     console.log("i dont know");
                 }

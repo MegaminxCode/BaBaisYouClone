@@ -19,10 +19,10 @@ var w = 30;
 var dir = "";
 var obj = "";
 function setup(){
-	createCanvas(241, 241);
+	createCanvas(481, 481);
     //createCanvas(85,85);
-	cols = 8;
-	rows = 8;
+	cols = 16;
+	rows = 16;
 	
 	grid = make2DArray(cols, rows);
     var i;
@@ -58,6 +58,20 @@ function setup(){
     grid[i][j].rock = true;
     obj = grid[i][j].obj = "rock";
     
+    i = 6;
+    j = 8;
+    grid[i][j].flag = true;
+    obj = grid[i][j].obj = "flag";
+    grid[i][j].pushable = true;
+    
+    i = 6;
+    j = 10;
+    grid[i][j].stopBlock = true;
+    obj = grid[i][j].obj = "stopBlock";
+    grid[i][j].command = "this.setStop";
+    grid[i][j].undoCommand = "this.unSetStop";
+    grid[i][j].pushable = true;
+    grid[i][j].hasACommand = true;
     
     i = 4;
     j = 6;
@@ -70,6 +84,12 @@ function setup(){
     
     i = 3;
     j = 4;
+    grid[i][j].isBlock = true;
+    obj = grid[i][j].obj = "isBlock";
+    grid[i][j].pushable = true;
+    
+    i = 6;
+    j = 9;
     grid[i][j].isBlock = true;
     obj = grid[i][j].obj = "isBlock";
     grid[i][j].pushable = true;
