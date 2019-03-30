@@ -125,9 +125,9 @@ function keyTyped() {
     var j;
     for (i = 0; i < cols; i++) {
         for (j = 0; j < rows; j++) {
-            if (key === 'w' || key === 'W') {
+            if (key === "w" || key === "W") {
                 //console.log("1");
-                if(grid[i][j].player == true){
+                if(grid[i][j].player === true){
                     grid[i][j][dir] = "up";
                     // console.log("2");
                     if(grid[i][j].check(i, j, dir)){
@@ -138,9 +138,9 @@ function keyTyped() {
                         return;
                     }
                 }
-            } else if (key === 'a' || key === 'A') {
+            } else if (key === "a" || key === "A") {
                 //console.log("1");
-                if(grid[i][j].player == true){
+                if(grid[i][j].player === true){
                     grid[i][j][dir] = "left";
                     // console.log("2");
                     if(grid[i][j].check(i, j, dir)){
@@ -151,9 +151,9 @@ function keyTyped() {
                         return;
                     }
                 }
-            }else if (key === 's' || key === 'S') {
+            }else if (key === "s" || key === "S") {
                 //console.log("1");
-                if(grid[i][j].player == true){
+                if(grid[i][j].player === true){
                     grid[i][j][dir] = "down";
                     // console.log("2");
                     //console.log(grid[i][j].obj);
@@ -165,9 +165,9 @@ function keyTyped() {
                         return;
                     }
                 }
-            }else if (key === 'd' || key === 'D') {
+            }else if (key === "d" || key === "D") {
                 //console.log("1");
-                if(grid[i][j].player == true){
+                if(grid[i][j].player === true){
                     grid[i][j][dir] = "right";
                    // console.log("2");
                     if(grid[i][j].check(i, j, dir)){

@@ -356,14 +356,18 @@ Cell.prototype.check = function (i, j, dir) {
 Cell.prototype.checkIsCommand = function () {
     var i;
     var j;
+    var xoff1 = 1;
+    var xoff2 = -1;
+    var yoff1 = 1;
+    var yoff2 = -1;
     for (i = 0; i < cols; i++) {
         for (j = 0; j < rows; j++) {
             if(grid[i][j].isBlock){
                 console.log("iscommand being ran");
-                var xoff1 = 1;
-                var xoff2 = -1;
-                var yoff1 = 1;
-                var yoff2 = -1;
+                xoff1 = 1;
+                xoff2 = -1;
+                yoff1 = 1;
+                yoff2 = -1;
                  console.log("iscommand being ran2");
                 if(i + xoff1 >= cols || i + xoff2 < 0 || j + yoff1 >= rows || j + yoff2 < 0){
                     console.log("out of bounds1");
