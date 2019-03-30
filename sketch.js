@@ -62,14 +62,14 @@ function setup(){
     j = 8;
     grid[i][j].flag = true;
     obj = grid[i][j].obj = "flag";
-    grid[i][j].pushable = true;
+    
     
     i = 6;
     j = 10;
-    grid[i][j].stopBlock = true;
-    obj = grid[i][j].obj = "stopBlock";
-    grid[i][j].command = "this.setStop";
-    grid[i][j].undoCommand = "this.unSetStop";
+    grid[i][j].pushBlock = true;
+    obj = grid[i][j].obj = "pushBlock";
+    grid[i][j].command = "this.setPushable";
+    grid[i][j].undoCommand = "this.unSetPushable";
     grid[i][j].pushable = true;
     grid[i][j].hasACommand = true;
     
@@ -94,8 +94,8 @@ function setup(){
     obj = grid[i][j].obj = "isBlock";
     grid[i][j].pushable = true;
     
-    i = 3;
-    j = 5;
+    i = 2;
+    j = 4;
     grid[i][j].pushBlock = true;
     obj = grid[i][j].obj = "pushBlock";
     grid[i][j].command = "this.setPushable";
@@ -104,8 +104,8 @@ function setup(){
     grid[i][j].hasACommand = true;
     //console.log(grid[i][j].obj);
     
-    i = 3;
-    j = 3;
+    i = 4;
+    j = 4;
     grid[i][j].rock = true;
     obj = grid[i][j].obj = "rock";
     
