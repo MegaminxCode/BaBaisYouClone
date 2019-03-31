@@ -490,23 +490,28 @@ Cell.prototype.checkIsCommand = function () {
                         //doesnt break out of the loop entirely
                         break BreakMeX;
                     }else if (!grid[i + xoff1][j].hasACommand && !grid[i + xoff2][j].hasACommand){
+                        //minor check for if the tile isnt a command
+                        //more checks are ran to know specifically what to do
+                        
+                        
                         if(grid[i + xoff1][j].obj === "" || grid[i + xoff1][j].obj === "player"){
+                            //if the player pushes a command block
+                            //the command is undone
                             console.log("false");
-                            i = i + xoff1;
                             switch(grid[i + xoff2][j].commandWasRanX){
                                 case "this.setStop":
                                     console.log("what i didnt think it is 3");
                                     console.log(grid[i][j + yoff2].wasStopped);
-                                    grid[i][j].obj = grid[i + xoff2][j].wasStopped;
+                                   // grid[i][j].obj = grid[i + xoff2][j].wasStopped;
                                     this.unSetStop(i, j, grid[i][j].obj);
-                                    grid[i][j].obj = "";
+                                   // grid[i][j].obj = "";
                                     break;
                                 case "this.setPushable":
                                     console.log("what i think it is");
                                     console.log(grid[i][j].obj);
-                                    grid[i][j].obj = grid[i + xoff2][j].wasPushed;
+                                   // grid[i][j].obj = grid[i + xoff2][j].wasPushed;
                                     this.unSetPushable(i, j,  grid[i][j].obj);
-                                    grid[i][j].obj = "";
+                                   // grid[i][j].obj = "";
                                     break;
                             }
                             //sets it to blank so it isnt ran again until its needed
@@ -518,7 +523,8 @@ Cell.prototype.checkIsCommand = function () {
                         }else if(grid[i + xoff2][j].obj === "" || grid[i + xoff2][j].obj === "player"){
                             console.log("false2");
                             
-                            
+                            //if the player pushes a command block
+                            //the command is undone
                             
                             
                             switch(grid[i][j].commandWasRanX){
@@ -533,7 +539,9 @@ Cell.prototype.checkIsCommand = function () {
                                     break;
                                 case "this.setPushable":
                                     console.log("what i didnt think it is");
-                                    //Keep an Eye on this. Seems off. Called it XD Got an issue fixed it.
+                                    //Keep an Eye on this. Seems off.
+                                    //10mins later:Called it XD Got an issue fixed it.
+                                    //note to self dont use = in console.log
                                     //console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
                                    // grid[i][j].obj = grid[i + xoff1][j].wasPushed;
                                     this.unSetPushable(i + xoff1, j, grid[i + xoff1][j].obj);
@@ -546,8 +554,8 @@ Cell.prototype.checkIsCommand = function () {
                             //doesnt break out of the loop entirely
                             break BreakMeX;
                         }else{
-                            
-                            i = i + yoff1;
+                            //not too sure...... probs just incase any other configuration of non commands
+                            i = i + xoff1;
                             switch(grid[i + xoff2][j].commandWasRanX){
                                 case "this.setStop":
                                     console.log("what i think it is");
@@ -572,12 +580,15 @@ Cell.prototype.checkIsCommand = function () {
                         break BreakMeX;
                     }
                     else if(grid[i + xoff1][j].obj === "" || grid[i + xoff1][j].obj === "player"){
+                        //if the player pushes the normal block
+                        //it undoes the command
                         console.log("false");
                         i = i + xoff1;
                         switch(grid[i + xoff2][j].commandWasRanX){
                             case "this.setStop":
                                 console.log("what i didnt think it is 3");
                                 console.log(grid[i][j + yoff2].wasStopped);
+                                //player obj is set in move so it doesnt matter if its unset here
                                 grid[i][j].obj = grid[i + xoff2][j].wasStopped;
                                 this.unSetStop(i, j, grid[i][j].obj);
                                 grid[i][j].obj = "";
@@ -585,6 +596,7 @@ Cell.prototype.checkIsCommand = function () {
                             case "this.setPushable":
                                 console.log("what i think it is");
                                 console.log(grid[i][j].obj);
+                                //player obj is set in move so it doesnt matter if its unset here
                                 grid[i][j].obj = grid[i + xoff2][j].wasPushed;
                                 this.unSetPushable(i, j,  grid[i][j].obj);
                                 grid[i][j].obj = "";
@@ -598,7 +610,8 @@ Cell.prototype.checkIsCommand = function () {
                         break BreakMeX;
                     }else if(grid[i + xoff2][j].obj === "" || grid[i + xoff2][j].obj === "player"){
                         console.log("false2");
-                        
+                        //if the player pushes the normal block
+                        //it undoes the command
                         
                         
                         i = i + xoff2;
@@ -607,6 +620,7 @@ Cell.prototype.checkIsCommand = function () {
                                 console.log("what i didnt think it is 2");
                                 console.log(grid[i + xoff1][j].wasStopped);
                                 console.log(grid[i + 2][j].obj);
+                                 //player obj is set in move so it doesnt matter if its unset here
                                 grid[i][j].obj = grid[i + xoff1][j].wasStopped;
                                 console.log(grid[i + 2][j].obj = grid[i + xoff1][j].wasStopped);
                                 this.unSetStop(i, j, grid[i + 2][j].obj);
@@ -615,6 +629,7 @@ Cell.prototype.checkIsCommand = function () {
                             case "this.setPushable":
                                 console.log("what i didnt think it is");
                                 console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
+                                 //player obj is set in move so it doesnt matter if its unset here
                                 grid[i][j].obj = grid[i + xoff1][j].wasPushed;
                                 this.unSetPushable(i, j, grid[i][j].obj);
                                 grid[i][j].obj = "";
@@ -626,6 +641,7 @@ Cell.prototype.checkIsCommand = function () {
                         //doesnt break out of the loop entirely
                         break BreakMeX;
                     }else if(grid[i + xoff2][j].hasACommand){
+                        
                         console.log("first run");
                         //console.log(grid[i + xoff2][j].obj);
                         //console.log(grid[i + xoff2][j].obj);
@@ -633,6 +649,9 @@ Cell.prototype.checkIsCommand = function () {
                         //console.log(this.j);
                         
                         console.log(grid[i][j].commandWasRanY);
+                        //if a command was ran before and the
+                        //player pushed a different command block in place of the other
+                        //undo the first command and do the second
                         if(grid[i][j].commandWasRanX !== grid[i + xoff2][j].command){
                             switch(grid[i + xoff2][j].command){
                                 case "this.setPushable":
@@ -675,6 +694,9 @@ Cell.prototype.checkIsCommand = function () {
                         console.log("second run");
                         
                         console.log(grid[i][j].commandWasRanY);
+                        //if a command was ran before and the
+                        //player pushed a different command block in place of the other
+                        //undo the first command and do the second
                         if(grid[i][j].commandWasRanX !== grid[i + xoff1][j].command){
                             switch(grid[i + xoff1][j].command){
                                     
@@ -857,16 +879,16 @@ Cell.prototype.checkIsCommand = function () {
                             case "this.setStop":
                                 console.log("what i didnt think it is 3");
                                 console.log(grid[i][j + yoff2].wasStopped);
-                                grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                               // grid[i][j].obj = grid[i][j + yoff2].wasStopped;
                                 this.unSetStop(i, j, grid[i][j].obj);
-                                grid[i][j].obj = "";
+                               // grid[i][j].obj = "";
                                 break;
                             case "this.setPushable":
                                 console.log("what i think it is");
                                 console.log(grid[i][j].obj);
-                                grid[i][j].obj = grid[i][j + yoff2].wasPushed;
+                               // grid[i][j].obj = grid[i][j + yoff2].wasPushed;
                                 this.unSetPushable(i, j,  grid[i][j].obj);
-                                grid[i][j].obj = "";
+                               // grid[i][j].obj = "";
                                 break;
                         }
                         grid[i][j + yoff2].commandWasRanY  = "";
@@ -997,7 +1019,6 @@ Cell.prototype.checkIsCommand = function () {
                             case "this.setStop":
                                 
                                 j = j + yoff1;
-                                //grid[i][j].wasPsuhed needs to be accesses somwhow.
                                 this.unSetPushable(i, j, grid[i][j].obj);
                                 grid[i][j + yoff2].wasStopped  = grid[i][j].obj;
                                 
