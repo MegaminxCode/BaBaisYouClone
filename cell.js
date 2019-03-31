@@ -7,15 +7,19 @@ function Cell(i, j, w) {
     
     this.obj = obj;
     this.dir = dir;
-    this.player = false; //Normal
+    this.playerIcon = false; //Normal
+    this.playerBlock = false;
     this.isBlock = false;
     this.pushable = false;
+    this.isYou = false;
     this.commandWasRanX = "";
     this.commandWasRanY = "";
     this.pushBlock = false;
     this.stopBlock = false;
     this.wasPushed = "";
     this.wasStopped = "";
+    this.wasYoued = "";
+    this.youBlock = false;
     this.stop = false;
     this.hasACommand = false;
     this.command = "";
@@ -230,7 +234,7 @@ Cell.prototype.check = function (i, j, dir) {
                 
             }else{
                 
-                console.log("chrck rock was ran");
+                console.log("check else was ran");
                 //Pushing twice fix
                 grid[i][j][dir] = "up";
                 if(grid[i][j].pushable && grid[i][j].check(i, j, dir)){
@@ -328,6 +332,7 @@ Cell.prototype.check = function (i, j, dir) {
                 
             } else if(grid[i][j].obj === ""){
                 //console.log("check true is fine");
+                console.log("right2");
                 return true;
                 
             }else{
@@ -338,6 +343,7 @@ Cell.prototype.check = function (i, j, dir) {
                     console.log("push true");
                     if(this.push(i, j, dir, obj)){
                         //this.checkIsCommand();
+                        console.log("right");
                         return true;
                     }else{
                         return false;
@@ -479,7 +485,7 @@ Cell.prototype.checkIsCommand = function () {
                                 case "this.setPushable":
                                     console.log("what i didnt think it is");
                                     //Keep an Eye on this. Seems off. Called it XD Got an issue fixed it.
-                                    console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
+                                    //console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
                                    // grid[i][j].obj = grid[i + xoff1][j].wasPushed;
                                     this.unSetPushable(i + xoff1, j, grid[i + xoff1][j].obj);
                                  //   grid[i][j].obj = "";
@@ -800,7 +806,7 @@ Cell.prototype.checkIsCommand = function () {
                                 break;
                             case "this.setPushable":
                                 console.log("what i didnt think it is");
-                                console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
+                                //console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
                                 //grid[i][j].obj = grid[i][j + yoff1].wasPushed;
                                 this.unSetPushable(i, j + yoff1, grid[i][j + yoff1].obj);
                               //  grid[i][j].obj = "";
