@@ -59,8 +59,8 @@ function setup(){
     
     i = 2;
     j = 6;
-    grid[i][j].rock = true;
-    obj = grid[i][j].obj = "rock";
+    grid[i][j].flag = true;
+    obj = grid[i][j].obj = "flag";
     
     i = 6;
     j = 8;

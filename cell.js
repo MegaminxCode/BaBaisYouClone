@@ -498,20 +498,25 @@ Cell.prototype.checkIsCommand = function () {
                             //if the player pushes a command block
                             //the command is undone
                             console.log("false");
+                            i = i + xoff1;
                             switch(grid[i + xoff2][j].commandWasRanX){
                                 case "this.setStop":
                                     console.log("what i didnt think it is 3");
                                     console.log(grid[i][j + yoff2].wasStopped);
-                                   // grid[i][j].obj = grid[i + xoff2][j].wasStopped;
+                                    temp = grid[i][j].obj;
+                                    grid[i][j].obj = grid[i + xoff2][j].wasStopped;
                                     this.unSetStop(i, j, grid[i][j].obj);
-                                   // grid[i][j].obj = "";
+                                    grid[i][j].obj = temp;
+                                    temp = "";
                                     break;
                                 case "this.setPushable":
                                     console.log("what i think it is");
                                     console.log(grid[i][j].obj);
-                                   // grid[i][j].obj = grid[i + xoff2][j].wasPushed;
+                                    temp = grid[i][j].obj;
+                                    grid[i][j].obj = grid[i + xoff2][j].wasPushed;
                                     this.unSetPushable(i, j,  grid[i][j].obj);
-                                   // grid[i][j].obj = "";
+                                    grid[i][j].obj = temp;
+                                    temp = "";
                                     break;
                             }
                             //sets it to blank so it isnt ran again until its needed
@@ -526,26 +531,29 @@ Cell.prototype.checkIsCommand = function () {
                             //if the player pushes a command block
                             //the command is undone
                             
-                            
-                            switch(grid[i][j].commandWasRanX){
+                            i = i + xoff2;
+                            switch(grid[i + xoff1][j].commandWasRanX){
                                 case "this.setStop":
                                     console.log("what i didnt think it is 2");
                                     console.log(grid[i][j + yoff1].wasStopped);
                                     console.log(grid[i][j + yoff1].obj);
                                     
                                     console.log(grid[i][j + yoff1].wasStopped);
-                                    this.unSetStop(i + xoff1, j, grid[i + xoff1][j].obj);
-                                    
+                                    temp = grid[i][j].obj;
+                                    grid[i][j].obj = grid[i + xoff1][j].wasStopped;
+                                    this.unSetStop(i, j, grid[i][j].obj);
+                                    grid[i][j].obj = temp;
+                                    temp = "";
                                     break;
                                 case "this.setPushable":
                                     console.log("what i didnt think it is");
-                                    //Keep an Eye on this. Seems off.
-                                    //10mins later:Called it XD Got an issue fixed it.
                                     //note to self dont use = in console.log
                                     //console.log(grid[i][j].obj = grid[i][j + yoff1].wasPushed);
-                                   // grid[i][j].obj = grid[i + xoff1][j].wasPushed;
-                                    this.unSetPushable(i + xoff1, j, grid[i + xoff1][j].obj);
-                                 //   grid[i][j].obj = "";
+                                    temp = grid[i][j].obj;
+                                    grid[i][j].obj = grid[i + xoff1][j].wasPushed;
+                                    this.unSetPushable(i, j,  grid[i][j].obj);
+                                    grid[i][j].obj = temp;
+                                    temp = "";
                                     break;
                             }
                             //sets it to blank so it isnt ran again until its needed
@@ -563,7 +571,7 @@ Cell.prototype.checkIsCommand = function () {
                                     
                                     this.unSetStop(i, j,  grid[i][j].obj);
                                     //sets it to blank so it isnt ran again until its needed
-                                    grid[i + xoff2][j].commandWasRanX  = "";
+                                    
                                     break;
                                 case "this.setPushable":
                                     console.log("what i think it is");
@@ -571,9 +579,10 @@ Cell.prototype.checkIsCommand = function () {
                                     
                                     this.unSetPushable(i, j,  grid[i][j].obj);
                                     //sets it to blank so it isnt ran again until its needed
-                                    grid[i + xoff2][j].commandWasRanX  = "";
+                                    
                                     break;
                             }
+                            grid[i + xoff2][j].commandWasRanX  = "";
                         }
                         //breaks out so the y command can be ran
                         //doesnt break out of the loop entirely
@@ -879,16 +888,20 @@ Cell.prototype.checkIsCommand = function () {
                             case "this.setStop":
                                 console.log("what i didnt think it is 3");
                                 console.log(grid[i][j + yoff2].wasStopped);
-                               // grid[i][j].obj = grid[i][j + yoff2].wasStopped;
+                                temp = grid[i][j].obj;
+                                grid[i][j].obj = grid[i][j + yoff2].wasStopped;
                                 this.unSetStop(i, j, grid[i][j].obj);
-                               // grid[i][j].obj = "";
+                                grid[i][j].obj = temp;
+                                temp = "";
                                 break;
                             case "this.setPushable":
                                 console.log("what i think it is");
                                 console.log(grid[i][j].obj);
-                               // grid[i][j].obj = grid[i][j + yoff2].wasPushed;
+                                temp = grid[i][j].obj;
+                                grid[i][j].obj = grid[i][j + yoff2].wasPushed;
                                 this.unSetPushable(i, j,  grid[i][j].obj);
-                               // grid[i][j].obj = "";
+                                grid[i][j].obj = temp;
+                                temp = "";
                                 break;
                         }
                         grid[i][j + yoff2].commandWasRanY  = "";
